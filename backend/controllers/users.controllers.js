@@ -1,7 +1,10 @@
-const User = require("../models/User")
+const Users = require("../models/User")
+const verify = require('mongoose').Types.ObjectId
+
+
 module.exports.allUser = async(req,res)=>{
     try {
-        let users = await User.find().select("-password");
+        let users = await Users.find().select("-password");
         return res.status(200).json({users})
     } catch (error) {
         return res.status(500).json({error});   
@@ -9,14 +12,48 @@ module.exports.allUser = async(req,res)=>{
  
 }
 module.exports.oneUser = async(req,res)=>{
-    
-    res.status(200).json({message:"nothing"});
+    const {id} = req.body;
+    if(!verify.isValid(id)){
+        return res.status(500).json({error:"Utilisateur inexistant"});
+    }
+    try {
+        Users.findById(id,(err,docs)=>{
+            if (err || docs== null ) {
+                return res.status(500).json({err})
+            }
+            return res.status(200).json({docs})  
+        })
+    } catch (error) {
+        return res.status(500).json({error});
+    }
 }
 module.exports.updateUser = async(req,res)=>{
-    console.log(req);
+    const {bio,sexe,number,lastname,firstname} = req.body;
+    const {id} =req.params;
+    if(!verify.isValid(id)){
+        return res.status(500).json({error:"Utilisateur inexistant"});
+    }
+    try {
+        await Users.findByIdAndUpdate(id,{$set:{bio,sexe,number,lastname,firstname}},{setDefaultsOnInsert:true,new:true,upsert:true},(err,docs)=>{
+            if (err || docs== null ) {
+                return res.status(500).json({err})
+            }
+            return res.status(200).json({docs})  
+        })
+    } catch (error) {
+        return res.status(500).json({error});
+    }
     res.status(200).json({message:"nothing"});
 }
 module.exports.deleteUser = async(req,res)=>{
-    console.log(req);
-    res.status(200).json({message:"nothing"});
+    const {id} =req.params;
+    if(!verify.isValid(id)){
+        return res.status(500).json({error:"Utilisateur inexistant"});
+    }
+    try {
+        await Users.findOneAndRemove({_id:id}).exec();
+        return res.status(200).json({message:"Compte suppprimé"})
+    } catch (error) {
+        return res.status(500).json({error});
+    }
 }
