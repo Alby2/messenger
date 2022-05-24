@@ -1,10 +1,29 @@
 const User = require("../models/User");
 const verifyId = require("mongoose").Types.ObjectId;
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 
 
 module.exports.login = async(req,res)=>{
-    
+    const {email,password} = req.body;
+    try {
+        let user = await User.findOne({email})
+        if (user) {
+            const result =await bcrypt.compare(password,user.password);
+            if (result) {
+                let id = user._id
+                const token_auth = await jwt.sign({id},process.env.TOKEN_AUTH,{expiresIn:30*24*60*60*1000})
+                res.cookie("auth",token_auth,{httpOnly:true,maxAge:30*24*60*60*1000})
+                return res.status(200).json({success:"Connexion success"})
+            }
+            return res.status(500).json({err:"Information invalide"})
+        }else{
+            return res.status(500).json({err:"Information invalide"})
+        }
+    } catch (error) {
+        return res.status(500).json({err})
+    }
 }
 
 module.exports.sign = async(req,res)=>{
@@ -26,8 +45,8 @@ module.exports.sign = async(req,res)=>{
 }
 
 module.exports.logout = async(req,res)=>{
-
-
+    res.cookie("jwt","",{maxAge:1});
+    res.redirect("api/user");
 }
 
 module.exports.forget = async(req,res)=>{
