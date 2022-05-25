@@ -19,6 +19,10 @@
         required: true,
         minlength: 6,
     },
+    resert:{
+        type:Boolean,
+        default:false
+    },
     email:{
         type:String,
         require:true,

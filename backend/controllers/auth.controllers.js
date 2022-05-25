@@ -10,6 +10,8 @@ module.exports.login = async(req,res)=>{
     try {
         let user = await User.findOne({email})
         if (user) {
+            console.log(password);
+            console.log(user.password);
             const result =await bcrypt.compare(password,user.password);
             if (result) {
                 let id = user._id
@@ -31,7 +33,8 @@ module.exports.sign = async(req,res)=>{
     
     try {
         await User.findOne({email}).then((docs)=>{
-            if (JSON.stringify(docs) !== '{}') {
+            
+            if (docs !== null) {
                 return res.status(500).json("Email invalide pour une inscirption")
             }
         }).catch((err)=>{
@@ -45,7 +48,7 @@ module.exports.sign = async(req,res)=>{
 }
 
 module.exports.logout = async(req,res)=>{
-    res.cookie("jwt","",{maxAge:1});
+    res.cookie("auth","",{maxAge:1});
     res.redirect("api/user");
 }
 
