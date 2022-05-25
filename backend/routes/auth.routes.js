@@ -7,6 +7,8 @@ router.post("/inscription",authCntrl.sign);
 
 router.put("/forget",authCntrl.forget);
 
+router.post("/send/mail",authCntrl.sendMailForget);
+
 router.get("/logout",authCntrl.logout)
 
 

@@ -19,7 +19,7 @@
         required: true,
         minlength: 6,
     },
-    resert:{
+    reset:{
         type:Boolean,
         default:false
     },
