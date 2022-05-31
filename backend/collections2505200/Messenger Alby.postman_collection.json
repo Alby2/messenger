@@ -181,6 +181,99 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Add Friend",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"confirm\":\"628b95c2ce9b7a12292227f3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/friends/628b8a38660e1ac8ab11546e/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"friends",
+						"628b8a38660e1ac8ab11546e",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Friend",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"confirm\":\"628b95c2ce9b7a12292227f3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/friends/628b8a38660e1ac8ab11546e/confirm",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"friends",
+						"628b8a38660e1ac8ab11546e",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refuse Friend",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medo\":1,\r\n    \"idFriend\":\"628b8af1c0d5f3e414d692fa\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/friends/628b8a38660e1ac8ab11546e/refuse",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"friends",
+						"628b8a38660e1ac8ab11546e",
+						"refuse"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
