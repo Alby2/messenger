@@ -1,3 +1,4 @@
+const Conversation = require("../models/Conversation");
 const User = require("../models/User");
 const verifyId =require('mongoose').Types.ObjectId;
 
@@ -43,14 +44,16 @@ module.exports.confirmFriend = async(req,res)=>{
         return res.status(500).json({err:"Id invalid"})
     }
     try {
-        await User.findByIdAndUpdate(idAdd,{$pull:{invit:idConfirm},$addToSet:{friends:idConfirm}},{new:true,upsert:true}).catch((err)=>{
+        let conversation = await Conversation.create({users:[idConfirm,idAdd]})
+        console.log(conversation);
+        await User.findByIdAndUpdate(idAdd,{$pull:{invit:idConfirm},$addToSet:{friends:idConfirm,conversations:conversation._id}},{new:true,upsert:true}).catch((err)=>{
                 return res.status(400).json({message:'Utilisateur introuvable'})
         })
-        await User.findByIdAndUpdate(idConfirm,{$pull:{confirm:idAdd},$addToSet:{friends:idAdd}},{new:true,upsert:true}).then((data)=>{
-            return res.status(200).json({message:"Utilisateur confirmé avec succes"})
-        }).catch((e)=>{
+        await User.findByIdAndUpdate(idConfirm,{$pull:{confirm:idAdd},$addToSet:{friends:idAdd,conversations:conversation._id}},{new:true,upsert:true}).catch((e)=>{
             return res.status(400).json({message:'Utilisateur introuvable'})
         })
+        
+        return res.status(200).json({message:"Utilisateur confirmé avec succes"})
     
     } catch (error) {
         return res.status(400).json({error})

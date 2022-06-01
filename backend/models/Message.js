@@ -5,10 +5,9 @@ const MessageSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    conversation:{
+    idConversation:{
         type:String,
         required:true,
-
     },
     tags:{
         type:Array,

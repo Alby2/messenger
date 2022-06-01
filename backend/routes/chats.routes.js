@@ -11,6 +11,8 @@ router.delete("delete/:id",chatsController.deleteFormMe);
 
 router.put(":id/clean",chatsController.cleanChat);
 
+router.post("/send",chatsController.sendChat);
+
 
 
 module.exports = router;
