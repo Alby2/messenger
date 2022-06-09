@@ -34,6 +34,14 @@ const MessageSchema = new mongoose.Schema({
     message_tag:{
         type:Array,
         default:[]
-    }
+    },
+    read_by:[
+        {id:String,
+        name:String,
+        time:String,
+        }
+    ]
+              
+    
 },{timestamps:true});
 module.exports = mongoose.model("Message",MessageSchema)
