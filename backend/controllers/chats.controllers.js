@@ -21,7 +21,7 @@ module.exports.oneChat = async(req,res)=>{
         return res.status(500).json("Erreur")
        })
        if (conversations.includes(idConversation)) {
-           await Messages.findById(idConversation).then((docs)=>{
+           await Messages.findById(idConversation).populate("sender").then((docs)=>{
                return res.status(200).json(docs)
            }).catch((e)=>{
                return res.status(500).json({error:"Erreur"})

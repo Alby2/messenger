@@ -22,10 +22,7 @@ const ConversationSchema = new mongoose.Schema({
         type:String,
         default:"default"
     },
-    users:{
-        type:Array,
-        required:true
-    },
+    users:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
     wordeffect:{
         type:Array,
         default:[]

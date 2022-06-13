@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 
 const GroupSchema = new mongoose.Schema({
-    admin:{
-        type:String,
-        required:true,
-    },
+    admin:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
     name:{
         type:String,
         required:true,
@@ -21,10 +18,7 @@ const GroupSchema = new mongoose.Schema({
         type:Array,
         default:[],
     },
-    exclu:{
-        type:Array,
-        default:[]
-    },
+    exclu:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
     type:{
         type:String,
         default:"public"
@@ -33,14 +27,12 @@ const GroupSchema = new mongoose.Schema({
         type:String,
         default:""
     },
-    otherAdmin:{
-        type:Array,
-        default:[]
-    },
+    otherAdmin:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
     link:{
         type:String,
         default:""
-    }
+    },
+    members:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}]
 },{timestamps:true});
 
 

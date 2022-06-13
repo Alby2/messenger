@@ -44,36 +44,16 @@
         type:Array,
         default:[],
     },
-    friends:{
-        type:Array,
-        default:[],
-    },
-    confirm:{
-        type:Array,
-        default:[],
-    },
-    invit:{
-        type:Array,
-        default:[],
-    },
+    friends:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
+    confirm:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
+    invit:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
     online:{
         type:Date,
         default : mongoose.now()
     },
-    conversations:{
-        type:Array,
-        default:[]
-    },
-    groups:{
-        type:Array,
-        default:[],
-    },
-    groupsInvit:{
-        type:Array,
-        default:[]
-    }
-
-
+    conversations:[{type:mongoose.Schema.Types.ObjectId,ref:'Conversation'}],
+    groups:[{type:mongoose.Schema.Types.ObjectId,ref:'Group'}],
+    groupsInvit:[{type:mongoose.Schema.Types.ObjectId,ref:'Group'}]
  },{timestamps:true})
  userSchema.pre("save",async function (next) {
      const salt = await bcrypt.genSalt();

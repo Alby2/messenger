@@ -1,18 +1,9 @@
 const mongoose = require("mongoose");
 
 const MessageSchema = new mongoose.Schema({
-    sender:{
-        type:String,
-        required:true
-    },
-    idConversation:{
-        type:String,
-        required:true,
-    },
-    tags:{
-        type:Array,
-        default:[]
-    },
+    sender:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
+    idConversation:{type:mongoose.Schema.Types.ObjectId,ref:'Conversation'},
+    tags:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}],
     message:{
         type:String,
         min:1,
@@ -31,16 +22,8 @@ const MessageSchema = new mongoose.Schema({
         enum:["group","conversation","canal"],
         default:"conversation"
     },
-    message_tag:{
-        type:Array,
-        default:[]
-    },
-    read_by:[
-        {id:String,
-        name:String,
-        time:String,
-        }
-    ]
+    message_tag:{type:mongoose.Schema.Types.ObjectId,ref:'Conversation'},
+    read_by:[{type:mongoose.Schema.Types.ObjectId,ref:'user'}]
               
     
 },{timestamps:true});
