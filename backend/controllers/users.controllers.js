@@ -4,7 +4,7 @@ const verify = require('mongoose').Types.ObjectId
 
 module.exports.allUser = async(req,res)=>{
    
-        const users = await User.find().select("-password");
+        const users = await User.find().populate("friends").select("-password");
         return res.status(200).json(users)
    
  
