@@ -1,5 +1,8 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
+const cors = require("cors")
+
+
 //Variable d'environnement
 require('dotenv').config({ path: './config/.env' });
 //Body parser
@@ -16,6 +19,12 @@ const chatRoutes = require("./routes/chats.routes");
 const friendRoutes = require("./routes/friends.routes");
 const authRoutes = require("./routes/auth.routes");
 
+app.use(cors({
+    origin: process.env.URL_FRONTEND,
+    methods: ["GET","HEAD","PUT","PATCH","POST","DELETE"],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+  }))
 //Auth
 app.use("/api/v1/auth",authRoutes);
 
