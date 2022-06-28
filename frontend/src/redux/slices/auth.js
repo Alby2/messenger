@@ -3,18 +3,18 @@ export const authSlice = createSlice({
     name:"auth",
     initialState:{
         isAuth:false,
-        idUser:"",
+        user:{},
     },
     reducers:{
         isAuthChanged : (state,values)=>{
             state.isAuth = !state.isAuth
         },
-        idUserChanged : (state,values)=>{
-            state.idUser = values.payload
+        userChanged : (state,values)=>{
+            state.user = values.payload
         }
     }
 })
 
-export const {isAuthChanged} = authSlice.actions;
+export const {isAuthChanged,userChanged} = authSlice.actions;
 
 export default authSlice.reducer
