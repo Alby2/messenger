@@ -32,13 +32,13 @@ module.exports.requiredAuth = async(req,res,next)=>{
     jwt.verify(token, process.env.TOKEN_AUTH, async (err, decodedToken) => {
       if (err) {
         console.log(err);
-        res.send(200).json('no token')
+        res.status(200).json('no token')
       } else {
         next();
       }
     });
   } else {
     console.log('No token');
-    res.send(200).json('no token')
+    res.status(200).json('no token')
   }
 }

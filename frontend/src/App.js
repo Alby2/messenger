@@ -15,15 +15,14 @@ const App = () => {
         url:`${process.env.REACT_APP_URL_BACK}checkAuth/id`,
         withCredentials: true,
       }).then((res)=>{
-        
-          setId(res.data._id)
-          set(userChanged(res.user))
+          setId(res.data.user._id)
+          set(userChanged(res.data.user))
           set(isAuthChanged())
       }).catch((err)=>{
         console.log('No token Aii')
       })
       
-    }, [id])
+    }, [""])
     
     
   return (

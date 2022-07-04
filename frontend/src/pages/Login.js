@@ -1,16 +1,18 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {useSelector,useDispatch} from 'react-redux'
 import {emailChanged,passwordChanged} from '../redux/slices/login'  
-import { isAuthChanged } from '../redux/slices/auth'
+import { isAuthChanged,userChanged } from '../redux/slices/auth'
+import AuthContext from '../context/AuthContext'
 
 const Login = () => {
-    const set = useDispatch()
-    const login = useSelector((state)=> state.login)
-    const auth = useSelector((state)=>state.auth)
+    const auth = useSelector((state)=> state.auth)
     const {isAuth} = auth
-    const {email,password} = login
-    console.log(`${process.env.REACT_APP_URL_BACK}auth/connexion`);
+    console.log(isAuth);
+
+    const set = useDispatch()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const authUser = async()=>{
         await axios({
             method:'POST',
@@ -19,10 +21,11 @@ const Login = () => {
                 email,password
             },
             withCredentials:true
-        }).then((response)=>{
-            if(response.status === 200){
-                console.log('response.data', response.data)
+        }).then((res)=>{
+            if(res.status === 200){
+                set(userChanged(res.data.user))
                 set(isAuthChanged())
+            
             };
         }).catch((error)=>{
             console.log('error', error)
@@ -31,8 +34,8 @@ const Login = () => {
   return (
     <div>
         {!isAuth ?(<>
-        <input type="email" value={email}  onChange={(e)=> set(emailChanged(e.target.value))} />
-        <input type="password" value={password} onChange={(e)=> set(passwordChanged(e.target.value))}  />
+        <input type="email" value={email}  onChange={(e)=> setEmail(e.target.value)} />
+        <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)}  />
         <button onClick={()=> {authUser()}}>
             Connexion
         </button></>):"Vous etes connecté" }

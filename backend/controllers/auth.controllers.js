@@ -16,7 +16,7 @@ module.exports.login = async(req,res)=>{
                 let id = user._id
                 const token_auth = await jwt.sign({id},process.env.TOKEN_AUTH,{expiresIn:30*24*60*60*1000})
                 res.cookie("auth",token_auth,{httpOnly:true,maxAge:30*24*60*60*1000})
-                return res.status(200).json({success:"Connexion success",id})
+                return res.status(200).json({success:"Connexion success",user})
             }
             return res.status(500).json({err:"Information invalide"})
         }else{

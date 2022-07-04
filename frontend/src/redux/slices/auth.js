@@ -3,13 +3,14 @@ export const authSlice = createSlice({
     name:"auth",
     initialState:{
         isAuth:false,
-        user:{},
+        user:[],
     },
     reducers:{
         isAuthChanged : (state,values)=>{
             state.isAuth = !state.isAuth
         },
         userChanged : (state,values)=>{
+          
             state.user = values.payload
         }
     }

@@ -34,7 +34,7 @@ app.use(cookieParser())
 
 app.get('*', checkUser);
 app.get('/api/v1/checkAuth/id', requiredAuth, (req, res) => {
-  res.status(200).send(res.locals.user)
+  res.status(200).json({user:res.locals.user})
 });
 //Auth
 app.use("/api/v1/auth",authRoutes);
